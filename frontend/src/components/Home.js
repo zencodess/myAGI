@@ -29,7 +29,7 @@ const Home = () => {
 
     const handleCreateStack = () => {
         setIsModalOpen(false);
-        navigate('/create-stack');
+        navigate('/create-stack');  // Navigate to the stack creation page
     };
 
     return (
