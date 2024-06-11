@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from .database import SessionLocal, engine, Base
-from .models import Stack
-from .schemas import StackCreate, StackRead
+from app.database import SessionLocal, engine, Base
+from app.models import Stack
+from app.schemas import StackCreate, StackRead
+from typing import List
 
 app = FastAPI()
 
@@ -22,3 +23,8 @@ def create_stack(stack: StackCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_stack)
     return db_stack
+
+@app.get("/api/stacks", response_model=List[StackRead])
+def read_stacks(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    stacks = db.query(Stack).offset(skip).limit(limit).all()
+    return stacks
