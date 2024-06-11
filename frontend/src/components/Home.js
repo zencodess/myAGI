@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CreateStackModal from './CreateStackModal';
 
 const Home = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [stacks, setStacks] = useState([]);
+    const navigate = useNavigate();
 
     const fetchStacks = async () => {
         try {
@@ -23,6 +25,11 @@ const Home = () => {
     const closeModal = () => {
         setIsModalOpen(false);
         fetchStacks();  // Refresh stacks after closing the modal
+    };
+
+    const handleCreateStack = () => {
+        setIsModalOpen(false);
+        navigate('/create-stack');
     };
 
     return (
@@ -49,7 +56,7 @@ const Home = () => {
                     ))}
                 </div>
             </main>
-            <CreateStackModal isOpen={isModalOpen} onClose={closeModal} />
+            <CreateStackModal isOpen={isModalOpen} onClose={closeModal} onCreate={handleCreateStack} />
         </div>
     );
 };

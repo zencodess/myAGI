@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
+import StackCreationPage from './components/StackCreationPage';
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1>GenAI Stack</h1>
-            </header>
-            <main>
-                <Home />
-            </main>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/create-stack" element={<StackCreationPage />} />
+            </Routes>
+        </Router>
     );
 }
 

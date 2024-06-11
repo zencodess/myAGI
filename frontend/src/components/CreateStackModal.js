@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const CreateStackModal = ({ isOpen, onClose }) => {
+const CreateStackModal = ({ isOpen, onClose, onCreate }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
@@ -19,7 +19,7 @@ const CreateStackModal = ({ isOpen, onClose }) => {
         try {
             const response = await axios.post('/api/stacks', { name, description });
             console.log('Stack created:', response.data);
-            onClose();
+            onCreate();
         } catch (error) {
             console.error('Error creating stack:', error);
         }
