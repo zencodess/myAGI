@@ -169,6 +169,7 @@ body {
 }
 
 /* Stack Creation Page Styles */
+
 .stack-creation-container {
     display: flex;
     flex-direction: column;
@@ -212,11 +213,21 @@ body {
     margin-top: 0;
 }
 
+.sidebar-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-section ul ul {
+    padding-left: 20px;
+}
+
 .stack-workspace {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f0f0f0;
 }
 
 .workspace-placeholder {
@@ -229,4 +240,49 @@ body {
     background-color: #e0e0e0;
     border-radius: 50%;
     margin-bottom: 10px;
+}
+
+.zoom-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.zoom-controls button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 5px;
+}
+
+.zoom-controls span {
+    font-size: 16px;
+    margin: 0 10px;
+}
+
+.build-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.build-button button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.build-button button svg {
+    margin-right: 5px;
 }
