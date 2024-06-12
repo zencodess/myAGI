@@ -7,9 +7,9 @@ const StackCreationPage = () => {
     const [showAgents, setShowAgents] = useState(true);
     const [showTools, setShowTools] = useState(true);
     const [showLLMS, setShowLLMS] = useState(true);
-    const [selectedLLM, setSelectedLLM] = useState(null);
-    const [selectedTool, setSelectedTool] = useState(null);
-    const [selectedAgent, setSelectedAgent] = useState(null);
+    const [selectedLLMs, setSelectedLLMs] = useState([]);
+    const [selectedTools, setSelectedTools] = useState([]);
+    const [selectedAgents, setSelectedAgents] = useState([]);
 
     const handleZoomIn = () => {
         setZoomLevel(prevZoom => Math.min(prevZoom + 10, 200));
@@ -20,21 +20,15 @@ const StackCreationPage = () => {
     };
 
     const handleLLMClick = (llm) => {
-        setSelectedLLM(llm);
-        setSelectedTool(null);
-        setSelectedAgent(null);
+        setSelectedLLMs((prev) => [...prev, llm]);
     };
 
     const handleToolClick = (tool) => {
-        setSelectedTool(tool);
-        setSelectedLLM(null);
-        setSelectedAgent(null);
+        setSelectedTools((prev) => [...prev, tool]);
     };
 
     const handleAgentClick = (agent) => {
-        setSelectedAgent(agent);
-        setSelectedLLM(null);
-        setSelectedTool(null);
+        setSelectedAgents((prev) => [...prev, agent]);
     };
 
     return (
@@ -81,9 +75,9 @@ const StackCreationPage = () => {
                     </div>
                 </aside>
                 <section className="stack-workspace" style={{ transform: `scale(${zoomLevel / 100})` }}>
-                    {selectedLLM && (
-                        <div className="llm-configuration">
-                            <h2>{selectedLLM}</h2>
+                    {selectedLLMs.map((llm, index) => (
+                        <div key={index} className="llm-configuration">
+                            <h2>{llm}</h2>
                             <div className="llm-configuration-grid">
                                 <label>
                                     Max Tokens
@@ -103,10 +97,10 @@ const StackCreationPage = () => {
                                 </label>
                             </div>
                         </div>
-                    )}
-                    {selectedTool && (
-                        <div className="tool-configuration">
-                            <h2>{selectedTool}</h2>
+                    ))}
+                    {selectedTools.map((tool, index) => (
+                        <div key={index} className="tool-configuration">
+                            <h2>{tool}</h2>
                             <div className="tool-configuration-grid">
                                 <label>
                                     API Key
@@ -119,10 +113,10 @@ const StackCreationPage = () => {
                                 {/* Add more configuration fields as needed */}
                             </div>
                         </div>
-                    )}
-                    {selectedAgent && (
-                        <div className="agent-configuration">
-                            <h2>{selectedAgent}</h2>
+                    ))}
+                    {selectedAgents.map((agent, index) => (
+                        <div key={index} className="agent-configuration">
+                            <h2>{agent}</h2>
                             <div className="agent-configuration-grid">
                                 <label>
                                     Agent Name
@@ -150,8 +144,8 @@ const StackCreationPage = () => {
                                 {/* Add more configuration fields as needed */}
                             </div>
                         </div>
-                    )}
-                    {!selectedLLM && !selectedTool && !selectedAgent && (
+                    ))}
+                    {!selectedLLMs.length && !selectedTools.length && !selectedAgents.length && (
                         <div className="workspace-placeholder">
                             <div className="placeholder-icon"></div>
                             <p>Drag & drop to get started</p>
