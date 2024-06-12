@@ -286,3 +286,31 @@ body {
 .build-button button svg {
     margin-right: 5px;
 }
+
+
+/* LLM Configuration Styles */
+.llm-configuration {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.llm-configuration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.llm-configuration-grid label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.llm-configuration-grid input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+}
