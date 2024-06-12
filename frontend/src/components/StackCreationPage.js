@@ -8,6 +8,8 @@ const StackCreationPage = () => {
     const [showTools, setShowTools] = useState(true);
     const [showLLMS, setShowLLMS] = useState(true);
     const [selectedLLM, setSelectedLLM] = useState(null);
+    const [selectedTool, setSelectedTool] = useState(null);
+    const [selectedAgent, setSelectedAgent] = useState(null);
 
     const handleZoomIn = () => {
         setZoomLevel(prevZoom => Math.min(prevZoom + 10, 200));
@@ -19,6 +21,20 @@ const StackCreationPage = () => {
 
     const handleLLMClick = (llm) => {
         setSelectedLLM(llm);
+        setSelectedTool(null);
+        setSelectedAgent(null);
+    };
+
+    const handleToolClick = (tool) => {
+        setSelectedTool(tool);
+        setSelectedLLM(null);
+        setSelectedAgent(null);
+    };
+
+    const handleAgentClick = (agent) => {
+        setSelectedAgent(agent);
+        setSelectedLLM(null);
+        setSelectedTool(null);
     };
 
     return (
@@ -37,8 +53,8 @@ const StackCreationPage = () => {
                             </li>
                             {showAgents && (
                                 <ul>
-                                    <li>Agent 1</li>
-                                    <li>Agent 2</li>
+                                    <li onClick={() => handleAgentClick('Agent 1')}>Agent 1</li>
+                                    <li onClick={() => handleAgentClick('Agent 2')}>Agent 2</li>
                                 </ul>
                             )}
                             <li onClick={() => setShowTools(!showTools)}>
@@ -46,8 +62,9 @@ const StackCreationPage = () => {
                             </li>
                             {showTools && (
                                 <ul>
-                                    <li>Tool 1</li>
-                                    <li>Tool 2</li>
+                                    <li onClick={() => handleToolClick('Google Search')}>Google Search</li>
+                                    <li onClick={() => handleToolClick('DuckDuckGo')}>DuckDuckGo</li>
+                                    <li onClick={() => handleToolClick('WikiSearch')}>WikiSearch</li>
                                 </ul>
                             )}
                             <li onClick={() => setShowLLMS(!showLLMS)}>
@@ -64,7 +81,7 @@ const StackCreationPage = () => {
                     </div>
                 </aside>
                 <section className="stack-workspace" style={{ transform: `scale(${zoomLevel / 100})` }}>
-                    {selectedLLM ? (
+                    {selectedLLM && (
                         <div className="llm-configuration">
                             <h2>{selectedLLM}</h2>
                             <div className="llm-configuration-grid">
@@ -86,7 +103,55 @@ const StackCreationPage = () => {
                                 </label>
                             </div>
                         </div>
-                    ) : (
+                    )}
+                    {selectedTool && (
+                        <div className="tool-configuration">
+                            <h2>{selectedTool}</h2>
+                            <div className="tool-configuration-grid">
+                                <label>
+                                    API Key
+                                    <input type="password" placeholder="Type something" />
+                                </label>
+                                <label>
+                                    Search Base URL
+                                    <input type="text" placeholder="Type something" />
+                                </label>
+                                {/* Add more configuration fields as needed */}
+                            </div>
+                        </div>
+                    )}
+                    {selectedAgent && (
+                        <div className="agent-configuration">
+                            <h2>{selectedAgent}</h2>
+                            <div className="agent-configuration-grid">
+                                <label>
+                                    Agent Name
+                                    <input type="text" placeholder="Agent name" />
+                                </label>
+                                <label>
+                                    Role
+                                    <input type="text" placeholder="Role" />
+                                </label>
+                                <label>
+                                    Goal
+                                    <input type="text" placeholder="Goal" />
+                                </label>
+                                <label>
+                                    Backstory
+                                    <input type="text" placeholder="Backstory" />
+                                </label>
+                                <label>
+                                    Capability
+                                    <select>
+                                        <option value="llm_task_executor">llm_task_executor</option>
+                                        <option value="search_executor">search_executor</option>
+                                    </select>
+                                </label>
+                                {/* Add more configuration fields as needed */}
+                            </div>
+                        </div>
+                    )}
+                    {!selectedLLM && !selectedTool && !selectedAgent && (
                         <div className="workspace-placeholder">
                             <div className="placeholder-icon"></div>
                             <p>Drag & drop to get started</p>

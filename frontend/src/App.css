@@ -288,27 +288,27 @@ body {
 }
 
 
-/* LLM Configuration Styles */
-.llm-configuration {
+/* Configuration Styles */
+.llm-configuration, .tool-configuration, .agent-configuration {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.llm-configuration-grid {
+.llm-configuration-grid, .tool-configuration-grid, .agent-configuration-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.llm-configuration-grid label {
+.llm-configuration-grid label, .tool-configuration-grid label, .agent-configuration-grid label {
     display: flex;
     flex-direction: column;
     font-weight: bold;
 }
 
-.llm-configuration-grid input {
+.llm-configuration-grid input, .tool-configuration-grid input, .agent-configuration-grid input, .agent-configuration-grid select {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
