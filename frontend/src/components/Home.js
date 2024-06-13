@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CreateStackModal from './CreateStackModal';
 
-const Home = () => {
+const Home = ({ stacks, addStack, deleteStack }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [stacks, setStacks] = useState([]);
+    const [stackName, setStackName] = useState('');
+    const [stackDescription, setStackDescription] = useState('');
     const navigate = useNavigate();
 
     const fetchStacks = async () => {
         try {
             const response = await axios.get('/api/stacks');
-            setStacks(response.data);
+            response.data.forEach(stack => addStack(stack));
         } catch (error) {
             console.error('Error fetching stacks:', error);
         }
@@ -22,14 +23,15 @@ const Home = () => {
     }, []);
 
     const openModal = () => setIsModalOpen(true);
-    const closeModal = () => {
-        setIsModalOpen(false);
-        fetchStacks();  // Refresh stacks after closing the modal
-    };
+    const closeModal = () => setIsModalOpen(false);
 
     const handleCreateStack = () => {
-        setIsModalOpen(false);
-        navigate('/create-stack');  // Navigate to the stack creation page
+        if (stackName.trim()) {
+            const newStack = { name: stackName, description: stackDescription };
+            addStack(newStack);
+            setIsModalOpen(false);
+            navigate(`/create-stack/${stackName}`);
+        }
     };
 
     return (
@@ -48,15 +50,21 @@ const Home = () => {
                 </div>
                 <div className="stacks-list">
                     {stacks.map(stack => (
-                        <div key={stack.id} className="stack-card">
+                        <div key={stack.name} className="stack-card">
                             <h3>{stack.name}</h3>
                             <p>{stack.description}</p>
-                            <button>Edit Stack</button>
+                            <button onClick={() => deleteStack(stack.name)}>Delete Stack</button>
                         </div>
                     ))}
                 </div>
             </main>
-            <CreateStackModal isOpen={isModalOpen} onClose={closeModal} onCreate={handleCreateStack} />
+            <CreateStackModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                onCreate={handleCreateStack}
+                setStackName={setStackName}
+                setStackDescription={setStackDescription}
+            />
         </div>
     );
 };
